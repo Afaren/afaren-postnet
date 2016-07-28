@@ -84,7 +84,8 @@ function convertBarcodeCellsToZipcodeCells(barcodeCells) {
 }
 
 function getCheckDigitInBarcode(barcodeCells) {
-  return barcodeCells.indexOf(barcodeCells.length - 1);
+  const length = barcodeCells.length;
+  return vectorTable.indexOf(barcodeCells[length-1]);
 }
 
 function barcodeToZipcode(barcode) {
@@ -127,5 +128,7 @@ module.exports = {
   isLegalBarcode,
   removeFrame,
   getBarcodeCells,
-  convertBarcodeCellsToZipcodeCells
+  convertBarcodeCellsToZipcodeCells,
+  calculateCheckDigit,
+  getCheckDigitInBarcode
 };

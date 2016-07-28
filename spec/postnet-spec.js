@@ -12,7 +12,7 @@ import {
   removeFrame,
   getBarcodeCells,
   convertBarcodeCellsToZipcodeCells,
-
+  getCheckDigitInBarcode,
 } from '../src/postnet'
 
 describe('getZipcodeCells', function () {
@@ -109,7 +109,6 @@ describe('zipcodeToBarcode', function () {
 
 });
 
-
 describe('removeFrame', () => {
   it('should return barcode body', () => {
     let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
@@ -129,7 +128,7 @@ describe('getBarcodeCells', () => {
   })
 });
 
-fdescribe('convertBarcodeCellsToZipcodeCells', () => {
+describe('convertBarcodeCellsToZipcodeCells', () => {
   it('should return equivalent form of zipcode cells when given a barcodeCells', () => {
     let barcodeCells = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|', '||:::'];
     const expected = [4, 5, 0, 5, 6, 1, 2, 3, 4];
@@ -147,6 +146,15 @@ describe('isLegalBarcode', () => {
   });
   it('should judge a barcode legal when its length is legal and it does not contains illegal character', () => {
 
+  })
+});
+
+fdescribe('getCheckDigitInBarcode', () => {
+  it('should return check digit in barcode', () => {
+    const barcodeCells = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|', '||:::'];//  [4, 5, 0, 5, 6, 1, 2, 3, 4];
+    const actual = getCheckDigitInBarcode(barcodeCells);
+    const expected = 0;
+    expect(actual).toEqual(expected);
   })
 });
 
