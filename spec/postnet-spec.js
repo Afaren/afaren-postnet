@@ -139,17 +139,28 @@ describe('convertBarcodeCellsToZipcodeCells', () => {
 
 describe('isLegalBarcode', () => {
   it('should judge a barcode illegal when it contains illegal character', () => {
-
+    const barcode = ':|::*';
+    const actual = isLegalBarcode(barcode);
+    expect(actual).toBeFalsy();
   });
   it('should judge a barcode illegal when its length is illegal', () => {
+    let barcode = ':|::';
+    let actual = isLegalBarcode(barcode);
+    expect(actual).toBeFalsy();
+
+    barcode = ':|::| ||||| ::::: :';
+    actual = isLegalBarcode(barcode);
+    expect(actual).toBeFalsy();
 
   });
-  it('should judge a barcode legal when its length is legal and it does not contains illegal character', () => {
-
+  it('should judge a barcode legal when its length is legal and it has frames and it does not contains illegal character', () => {
+    let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
+    let actual = isLegalBarcode(barcode);
+    expect(actual).toBeTruthy();
   })
 });
 
-fdescribe('getCheckDigitInBarcode', () => {
+describe('getCheckDigitInBarcode', () => {
   it('should return check digit in barcode', () => {
     const barcodeCells = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|', '||:::'];//  [4, 5, 0, 5, 6, 1, 2, 3, 4];
     const actual = getCheckDigitInBarcode(barcodeCells);
@@ -162,7 +173,7 @@ describe('barcodeToZipcode', () => {
   it('should return equivalent zipcode form of barcode when barcode is legal', () => {
     let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
     let actual = barcodeToZipcode(barcode);
-    let expected = '45056-1234';
+    let expected = '450561234';
     expect(actual).toEqual(expected)
 
   })

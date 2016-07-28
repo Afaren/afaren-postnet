@@ -59,8 +59,43 @@ function zipcodeToBarcode(zipcode) {
   return {errMsg: null, barcode: barcodeWithFrame};
 }
 
-function isLegalBarcode(barcode) {
+
+function discontainIllegalCharacter(barcode) {
+  let legalCharacterSet = new Set(['|', ' ', ':']);
+  for (let ch of barcode) {
+    if (!legalCharacterSet.has(ch))
+      return false;
+  }
   return true;
+}
+
+function eachBarcodeHasLegalLength(barcodeWithoutFrame, legalLength, delimiter) {
+  return barcodeWithoutFrame.split(delimiter).every(barcode => {
+    return barcode.length === legalLength;
+  });
+}
+
+function hasFrame(barcode) {
+
+  let n = barcode.length;
+  if (n < 4)
+    return false;
+  return hasHeadFrame(barcode.substring(0, 2)) && hasTailFrame(barcode.substring(n - 2, n));
+
+  function hasHeadFrame(header) {
+    return header === '| ';
+  }
+
+  function hasTailFrame(tail) {
+    return tail === ' |';
+  }
+}
+
+
+function isLegalBarcode(barcode) {
+  return discontainIllegalCharacter(barcode)
+    && hasFrame(barcode)
+    && eachBarcodeHasLegalLength(removeFrame(barcode), 5, ' ');
 }
 
 function removeFrame(barcode) {
@@ -85,7 +120,7 @@ function convertBarcodeCellsToZipcodeCells(barcodeCells) {
 
 function getCheckDigitInBarcode(barcodeCells) {
   const length = barcodeCells.length;
-  return vectorTable.indexOf(barcodeCells[length-1]);
+  return vectorTable.indexOf(barcodeCells[length - 1]);
 }
 
 function barcodeToZipcode(barcode) {
@@ -115,7 +150,6 @@ function barcodeToZipcode(barcode) {
 //
 //   return checkDigitCalculated === checkDigitInBarcode;
 // }
-
 
 
 module.exports = {
