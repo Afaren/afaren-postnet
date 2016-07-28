@@ -1,9 +1,9 @@
 /**
  * Created by afaren on 7/28/16.
  */
-import { getZipcodeCells } from '../src/postnet'
+import { getZipcodeCells , zipcodeToBarcode, calculateCheckDigit} from '../src/postnet'
 
-fdescribe('getZipcodeCells', function () {
+describe('getZipcodeCells', function () {
   it('should return a cell array of zipcode', function () {
     let zipcode = '45056-1234';
     let actual = getZipcodeCells(zipcode);
@@ -23,3 +23,44 @@ fdescribe('getZipcodeCells', function () {
   })
 });
 
+fdescribe('calculateCheckDigit', () => {
+  it('should return check digit of zipcodeCells', () => {
+    let zipcodeCells = [4, 5, 0, 5, 6];
+    let expected = 0;
+    let actual = calculateCheckDigit(zipcodeCells);
+    expect(actual).toEqual(expected);
+
+    zipcodeCells = [4, 5, 0, 5, 7];
+    expected = 9;
+    actual = calculateCheckDigit(zipcodeCells);
+    expect(actual).toEqual(expected);
+
+    zipcodeCells = [4, 5, 0, 5, 7, 9, 1, 1, 1];
+    expected = 7;
+    actual = calculateCheckDigit(zipcodeCells);
+    expect(actual).toEqual(expected);
+  })
+});
+
+
+describe('zipcodeToBarcode', function () {
+  it('should return a error message when zipcode has illegal length', function () {
+
+    const expected = {errMsg: 'length is illegal', barcode: null};
+
+    let zipcode = '1234';
+    let actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+
+    zipcode ='123456' ;
+    actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+    zipcode = '1234567890';
+    actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+  });
+
+});
