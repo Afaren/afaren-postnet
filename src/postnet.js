@@ -125,5 +125,6 @@ module.exports = {
   barcodeToZipcode,
   buildZipcode,
   isLegalBarcode,
-  removeFrame
+  removeFrame,
+  getBarcodeCells
 };

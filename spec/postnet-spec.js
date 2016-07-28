@@ -9,7 +9,8 @@ import {
   barcodeToZipcode,
   buildZipcode,
   isLegalBarcode,
-  removeFrame
+  removeFrame,
+  getBarcodeCells
 } from '../src/postnet'
 
 describe('getZipcodeCells', function () {
@@ -107,7 +108,7 @@ describe('zipcodeToBarcode', function () {
 });
 
 
-fdescribe('removeFrame', () => {
+describe('removeFrame', () => {
   it('should return barcode body', () => {
     let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
     let actual = removeFrame(barcode);
@@ -126,6 +127,17 @@ describe('barcodeToZipcode', () => {
 
   })
 });
+
+fdescribe('getBarcodeCells', () => {
+  it('should return a cell array of barcode', () => {
+    let barcodeWithoutFrame = ':|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::|';
+    let expected = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|'];
+    let actual = getBarcodeCells(barcodeWithoutFrame);
+    expect(actual).toEqual(expected);
+
+  })
+});
+
 
 describe('isLegalBarcode', () => {
   it('should judge a barcode illegal when it contains illegal character', () => {
