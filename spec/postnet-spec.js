@@ -1,7 +1,16 @@
 /**
  * Created by afaren on 7/28/16.
  */
-import {getZipcodeCells, zipcodeToBarcode, calculateCheckDigit, buildBarcodeBody} from '../src/postnet'
+import {
+  getZipcodeCells,
+  zipcodeToBarcode,
+  calculateCheckDigit,
+  buildBarcodeBody,
+  barcodeToZipcode,
+  buildZipcode,
+  isLegalBarcode,
+  removeFrame
+} from '../src/postnet'
 
 describe('getZipcodeCells', function () {
   it('should return a cell array of zipcode', function () {
@@ -42,7 +51,6 @@ describe('calculateCheckDigit', () => {
   })
 });
 
-
 describe('buildBarcodeBody', ()=> {
   it('should return barcode without frame', () => {
     let zipcodeCells = [4, 5, 0, 5, 6];
@@ -58,7 +66,6 @@ describe('buildBarcodeBody', ()=> {
     expect(actual).toEqual(expected)
   })
 });
-
 
 describe('zipcodeToBarcode', function () {
   it('should return a error message when zipcode has illegal length', () => {
@@ -79,7 +86,7 @@ describe('zipcodeToBarcode', function () {
     expect(actual).toEqual(expected);
 
   });
-  fit('should return a barcode without error message when zip is legal', () => {
+  it('should return a barcode without error message when zip is legal', () => {
     let zipcode = '45056';
     let expected = {errMsg: null, barcode: '| :|::| :|:|: ||::: :|:|: :||:: ||::: |'};
     let actual = zipcodeToBarcode(zipcode);
@@ -97,4 +104,37 @@ describe('zipcodeToBarcode', function () {
 
   });
 
+});
+
+
+fdescribe('removeFrame', () => {
+  it('should return barcode body', () => {
+    let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
+    let actual = removeFrame(barcode);
+    let expected = ':|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||:::';
+    expect(actual).toEqual(expected)
+  })
+});
+
+
+describe('barcodeToZipcode', () => {
+  it('should return equivalent zipcode form of barcode when barcode is legal', () => {
+    let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
+    let actual = barcodeToZipcode(barcode);
+    let expected = '45056-1234';
+    expect(actual).toEqual(expected)
+
+  })
+});
+
+describe('isLegalBarcode', () => {
+  it('should judge a barcode illegal when it contains illegal character', () => {
+
+  });
+  it('should judge a barcode illegal when its length is illegal', () => {
+
+  });
+  it('should judge a barcode legal when its length is legal and it does not contains illegal character', () => {
+
+  })
 });

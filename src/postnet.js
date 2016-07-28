@@ -38,7 +38,6 @@ function zipcodeHasLegalLength(zipcodeCells) {
 }
 
 function calculateCheckDigit(zipcodeCells) {
-
   let digit = getSum(zipcodeCells) % 10;
   return digit > 0 ? 10 - digit : 0;
 
@@ -47,7 +46,6 @@ function calculateCheckDigit(zipcodeCells) {
   }
 
 }
-
 
 function zipcodeToBarcode(zipcode) {
   const zipcodeCells = getZipcodeCells(zipcode);
@@ -61,12 +59,71 @@ function zipcodeToBarcode(zipcode) {
   return {errMsg: null, barcode: barcodeWithFrame};
 }
 
+function isLegalBarcode(barcode) {
+  return true;
+}
+
+function removeFrame(barcode) {
+  return barcode.substring(2, barcode.length - 2); // 注意边界
+}
+
+function getBarcodeCells(barcodeWithoutFrame) {
+  const delimiter = ' ';
+  return barcodeWithoutFrame.split(delimiter);
+}
+
+function buildZipcode(zipcodeCells) {
+  return zipcodeCells.join('');
+}
+
+function convertBarcodeCellsToZipcodeCells(barcodeCells) {
+  const length = barcodeCells.length;
+  return barcodeCells
+    .filter((v, k) => k < length - 1)
+    .map(i => vectorTable.indexOf(i));
+}
+
+function getCheckDigitInBarcode(barcodeCells) {
+  return barcodeCells.indexOf(barcodeCells.length - 1);
+}
+
+function barcodeToZipcode(barcode) {
+  if (!isLegalBarcode(barcode)) {
+    return {errMsg: 'illegal barcode', zipcode: null};
+  }
+  const barcodeWithoutFrame = removeFrame(barcode);
+  const barcodeCells = getBarcodeCells(barcodeWithoutFrame);
+  const zipcodeCells = convertBarcodeCellsToZipcodeCells(barcodeCells);
+  const checkDigitCalculated = calculateCheckDigit(zipcodeCells);
+  const checkDigitInBarcode = getCheckDigitInBarcode(barcodeCells);
+
+  if (checkDigitCalculated !== checkDigitInBarcode) {
+    return {errMsg: 'check digit error', zipcode: null};
+  }
+
+  const zipcode = buildZipcode(zipcodeCells);
+  return zipcode;
+}
+
+// function isValidatedCheckDigit(barcodeCells) {
+//   const length = barcodeCells.length;
+//   const checkDigitInBarcode = barcodeCells.indexOf(length - 1);
+//   const barcodeBodyCells = barcodeCells.filter((v, k) => k < length - 1);
+//   const zipcodeCells = barcodeBodyCells.map(i => vectorTable.indexOf(i));
+//   const checkDigitCalculated = calculateCheckDigit(zipcodeCells);
+//
+//   return checkDigitCalculated === checkDigitInBarcode;
+// }
+
+
 
 module.exports = {
   getZipcodeCells,
   buildBarcodeBody,
   calculateCheckDigit,
   zipcodeToBarcode,
-
-
+  barcodeToZipcode,
+  buildZipcode,
+  isLegalBarcode,
+  removeFrame
 };
