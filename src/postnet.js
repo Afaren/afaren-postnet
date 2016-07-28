@@ -22,10 +22,10 @@ function getZipcodeCells(zipcode) {
 }
 
 function buildBarcodeBody(zipcodeCells, checkDigit) {
-  return [].apply
-    .concat([], zipcodeCells, checkDigit)
+  return zipcodeCells
+    .concat(checkDigit)
     .map(i => vectorTable[i])
-    .join('');
+    .join(' ');
 }
 
 function addFrameToBarcodeBody(barcodeBody) {
