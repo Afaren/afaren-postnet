@@ -59,7 +59,6 @@ function zipcodeToBarcode(zipcode) {
   return {errMsg: null, barcode: barcodeWithFrame};
 }
 
-
 function discontainIllegalCharacter(barcode) {
   let legalCharacterSet = new Set(['|', ' ', ':']);
   for (let ch of barcode) {
@@ -90,7 +89,6 @@ function hasFrame(barcode) {
     return tail === ' |';
   }
 }
-
 
 function isLegalBarcode(barcode) {
   return discontainIllegalCharacter(barcode)
@@ -141,16 +139,6 @@ function barcodeToZipcode(barcode) {
   return zipcode;
 }
 
-// function isValidatedCheckDigit(barcodeCells) {
-//   const length = barcodeCells.length;
-//   const checkDigitInBarcode = barcodeCells.indexOf(length - 1);
-//   const barcodeBodyCells = barcodeCells.filter((v, k) => k < length - 1);
-//   const zipcodeCells = barcodeBodyCells.map(i => vectorTable.indexOf(i));
-//   const checkDigitCalculated = calculateCheckDigit(zipcodeCells);
-//
-//   return checkDigitCalculated === checkDigitInBarcode;
-// }
-
 
 module.exports = {
   getZipcodeCells,
@@ -163,6 +151,5 @@ module.exports = {
   removeFrame,
   getBarcodeCells,
   convertBarcodeCellsToZipcodeCells,
-  calculateCheckDigit,
   getCheckDigitInBarcode
 };

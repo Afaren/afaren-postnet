@@ -7,7 +7,6 @@ import {
   calculateCheckDigit,
   buildBarcodeBody,
   barcodeToZipcode,
-  buildZipcode,
   isLegalBarcode,
   removeFrame,
   getBarcodeCells,
@@ -15,7 +14,7 @@ import {
   getCheckDigitInBarcode,
 } from '../src/postnet'
 
-describe('getZipcodeCells', function () {
+describe('getZipcodeCells',  () => {
   it('should return a cell array of zipcode', function () {
     let zipcode = '45056-1234';
     let actual = getZipcodeCells(zipcode);
@@ -70,7 +69,7 @@ describe('buildBarcodeBody', ()=> {
   })
 });
 
-describe('zipcodeToBarcode', function () {
+describe('zipcodeToBarcode',  () => {
   it('should return a error message when zipcode has illegal length', () => {
 
     const expected = {errMsg: 'length is illegal', barcode: null};
