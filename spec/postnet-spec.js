@@ -10,7 +10,9 @@ import {
   buildZipcode,
   isLegalBarcode,
   removeFrame,
-  getBarcodeCells
+  getBarcodeCells,
+  convertBarcodeCellsToZipcodeCells,
+
 } from '../src/postnet'
 
 describe('getZipcodeCells', function () {
@@ -117,18 +119,7 @@ describe('removeFrame', () => {
   })
 });
 
-
-describe('barcodeToZipcode', () => {
-  it('should return equivalent zipcode form of barcode when barcode is legal', () => {
-    let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
-    let actual = barcodeToZipcode(barcode);
-    let expected = '45056-1234';
-    expect(actual).toEqual(expected)
-
-  })
-});
-
-fdescribe('getBarcodeCells', () => {
+describe('getBarcodeCells', () => {
   it('should return a cell array of barcode', () => {
     let barcodeWithoutFrame = ':|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::|';
     let expected = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|'];
@@ -138,6 +129,14 @@ fdescribe('getBarcodeCells', () => {
   })
 });
 
+fdescribe('convertBarcodeCellsToZipcodeCells', () => {
+  it('should return equivalent form of zipcode cells when given a barcodeCells', () => {
+    let barcodeCells = [':|::|', ':|:|:', '||:::', ':|:|:', ':||::', ':::||', '::|:|', '::||:', ':|::|', '||:::'];
+    const expected = [4, 5, 0, 5, 6, 1, 2, 3, 4];
+    let actual = convertBarcodeCellsToZipcodeCells(barcodeCells);
+    expect(actual).toEqual(expected);
+  })
+});
 
 describe('isLegalBarcode', () => {
   it('should judge a barcode illegal when it contains illegal character', () => {
@@ -147,6 +146,16 @@ describe('isLegalBarcode', () => {
 
   });
   it('should judge a barcode legal when its length is legal and it does not contains illegal character', () => {
+
+  })
+});
+
+describe('barcodeToZipcode', () => {
+  it('should return equivalent zipcode form of barcode when barcode is legal', () => {
+    let barcode = '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |';
+    let actual = barcodeToZipcode(barcode);
+    let expected = '45056-1234';
+    expect(actual).toEqual(expected)
 
   })
 });
