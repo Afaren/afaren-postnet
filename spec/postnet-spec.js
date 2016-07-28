@@ -43,7 +43,7 @@ describe('calculateCheckDigit', () => {
 });
 
 
-fdescribe('buildBarcodeBody', ()=> {
+describe('buildBarcodeBody', ()=> {
   it('should return barcode without frame', () => {
     let zipcodeCells = [4, 5, 0, 5, 6];
     let checkDigit = 0;
@@ -61,7 +61,7 @@ fdescribe('buildBarcodeBody', ()=> {
 
 
 describe('zipcodeToBarcode', function () {
-  it('should return a error message when zipcode has illegal length', function () {
+  it('should return a error message when zipcode has illegal length', () => {
 
     const expected = {errMsg: 'length is illegal', barcode: null};
 
@@ -76,6 +76,23 @@ describe('zipcodeToBarcode', function () {
 
     zipcode = '1234567890';
     actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+  });
+  fit('should return a barcode without error message when zip is legal', () => {
+    let zipcode = '45056';
+    let expected = {errMsg: null, barcode: '| :|::| :|:|: ||::: :|:|: :||:: ||::: |'};
+    let actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+    zipcode = '54056';
+    expected = {errMsg: null, barcode: '| :|:|: :|::| ||::: :|:|: :||:: ||::: |'};
+    actual = zipcodeToBarcode(zipcode);
+    expect(actual).toEqual(expected);
+
+    zipcode = '45056-1234';
+    actual = zipcodeToBarcode(zipcode);
+    expected = {errMsg: null, barcode: '| :|::| :|:|: ||::: :|:|: :||:: :::|| ::|:| ::||: :|::| ||::: |'};
     expect(actual).toEqual(expected);
 
   });

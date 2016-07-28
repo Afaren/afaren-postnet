@@ -29,7 +29,7 @@ function buildBarcodeBody(zipcodeCells, checkDigit) {
 }
 
 function addFrameToBarcodeBody(barcodeBody) {
-  return `|${barcodeBody}|`;
+  return `| ${barcodeBody} |`;
 }
 
 function zipcodeHasLegalLength(zipcodeCells) {
@@ -58,7 +58,7 @@ function zipcodeToBarcode(zipcode) {
   const checkDigit = calculateCheckDigit(zipcodeCells);
   const barcodeBody = buildBarcodeBody(zipcodeCells, checkDigit);
   const barcodeWithFrame = addFrameToBarcodeBody(barcodeBody);
-  return barcodeWithFrame;
+  return {errMsg: null, barcode: barcodeWithFrame};
 }
 
 
