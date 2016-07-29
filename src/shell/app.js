@@ -4,15 +4,6 @@
 const repl = require('repl');
 const core = require('../core/postnet');
 
-
-function printResult(result) {
-  if (result.errMsg !== null)
-    console.log('error message: ' + result.errMsg);
-  else
-    console.log('<--  ' + result.value);
-  return;
-}
-
 const actions = [
   {
     name: 'init',
@@ -43,7 +34,7 @@ const actions = [
           return 'init';
         default:
           console.log('result: ');
-          printResult(core.barcodeToZipcode(cmd));
+          printConvertResult(core.barcodeToZipcode(cmd));
           return 'init';
       }
     }
@@ -57,13 +48,20 @@ const actions = [
           return 'init';
         default:
           console.log('result: ');
-          printResult(core.zipcodeToBarcode(cmd));
+          printConvertResult(core.zipcodeToBarcode(cmd));
           return 'init';
       }
     }
   }
 ];
 
+function printConvertResult(result) {
+  if (result.errMsg !== null)
+    console.log('error message: ' + result.errMsg);
+  else
+    console.log('<--  ' + result.value);
+  return;
+}
 
 function switchRouter(context, done) {
   let router = actions.find(i => i.name === currentState);
@@ -81,11 +79,8 @@ function handleCmd(cmd, context, filename, done) {
   done(null);
 }
 
-
 let currentState = 'init';
-
 console.log(actions.find(i => i.name === currentState).help);
-
 let replServer = repl.start({prompt: '->', eval: handleCmd});
 
 
