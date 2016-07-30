@@ -22,23 +22,3 @@ class ZipcodeAction {
   }
 }
 module.exports = ZipcodeAction;
-
-/*{
- name: 'zipcode',
- help
- :
- 'input a zipcode to convert, entry \'q\' to return previous',
- doAction
- :
- function (cmd) {
- switch (cmd) {
- case 'q':
- return 'init';
- default:
- console.log('result: ');
- printConvertResult(core.zipcodeToBarcode(cmd));
- return 'init';
- }
- }
- }
- */

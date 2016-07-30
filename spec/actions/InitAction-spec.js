@@ -27,11 +27,14 @@ describe('InitAction', () => {
       expect(actual).toEqual(expected);
     });
 
-    xit('should quit when cmd is \'q\'', () => {
+    it('should quit when cmd is \'q\'', () => {
       spyOn(console, 'log');
+      spyOn(process, 'exit');  // 这样可以使得exit函数不执行？
+
       let cmd = 'q';
       let expectedExitedInfo = '---exit---';
       initAction.doAction(cmd);
+      expect(process.exit).toHaveBeenCalled();
       expect(initAction.doAction).toHaveBeenCalledWith(cmd);
       expect(console.log).toHaveBeenCalledWith(expectedExitedInfo);// 这样写导致jasmine测试信息一闪而过，但是下面的测试不会导致这样的结果
     });
@@ -47,7 +50,6 @@ describe('InitAction', () => {
         // expect(initAction.doAction).toHaveBeenCalledWith(otherCmd); //参数被放到数组中
       });
     });
-
 
   });
 
