@@ -50,7 +50,7 @@ describe('InitAction', () => {
         expect(initAction.doAction(cmd)).toEqual('init');
         let expectedConsoleInfo = 'invalidate input';
         expect(console.log).toHaveBeenCalledWith(expectedConsoleInfo);
-        // expect(initAction.doAction).toHaveBeenCalledWith(otherCmd); //参数被放到数组中
+        expect(initAction.doAction).toHaveBeenCalledWith(cmd); //参数被放到数组中
       });
 
     });
