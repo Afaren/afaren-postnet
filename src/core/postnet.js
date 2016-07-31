@@ -135,8 +135,8 @@ function barcodeToZipcode(barcode) {
   if (checkDigitCalculated !== checkDigitInBarcode) {
     return {errMsg: 'check digit error', value: null};
   }
-
   const zipcode = buildZipcode(zipcodeCells);
+
   return {errMsg:null, value:zipcode};
 }
 
