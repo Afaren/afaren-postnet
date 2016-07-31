@@ -1,5 +1,5 @@
 'use strict';
-const Router = require('./Router');
+const Router = require('./../Router');
 const repl = require('repl');
 
 const router = new Router();

@@ -2,7 +2,7 @@
  * Created by afaren on 7/29/16.
  */
 'use strict';
-const BarcodeAction = require('../../src/shell/actions/BarcodeAction');
+const BarcodeAction = require('../../src/actions/BarcodeAction');
 
 
 describe('BarcodeAction', () => {

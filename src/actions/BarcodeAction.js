@@ -1,13 +1,15 @@
 /**
  * Created by afaren on 7/29/16.
  */
-const printConvertResult = require('../formatPrint');
-import {zipcodeToBarcode} from '../../core/postnet';
 
-class ZipcodeAction {
+'use strict';
+const printConvertResult = require('../formatPrint');
+import {barcodeToZipcode} from '../core/postnet';
+
+class BarcodeAction {
   constructor() {
-    this.name = 'zipcode';
-    this.help = 'input a zipcode to convert, entry \'q\' to return previous';
+    this.name = 'barcode';
+    this.help = 'input a barcode to convert, entry \'q\' to return previous';
   }
 
   doAction(cmd) {
@@ -16,9 +18,10 @@ class ZipcodeAction {
         return 'init';
       default:
         console.log('result: ');
-        printConvertResult(zipcodeToBarcode(cmd));
+        printConvertResult(barcodeToZipcode(cmd));
         return 'init';
     }
+
   }
 }
-module.exports = ZipcodeAction;
+module.exports = BarcodeAction;

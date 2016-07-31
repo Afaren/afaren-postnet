@@ -3,9 +3,9 @@
  */
 
 
-const InitAction = require('./actions/InitAction');
-const BarcodeAction = require('./actions/BarcodeAction');
-const ZipcodeAction = require('./actions/ZipcodeAction');
+const InitAction = require('././InitAction');
+const BarcodeAction = require('././BarcodeAction');
+const ZipcodeAction = require('././ZipcodeAction');
 
 const actions = [
   new InitAction(),

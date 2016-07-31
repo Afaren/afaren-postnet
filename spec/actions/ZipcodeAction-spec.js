@@ -2,7 +2,7 @@
  * Created by afaren on 7/29/16.
  */
 'use strict';
-const ZipcodeAction = require('../../src/shell/actions/ZipcodeAction');
+const ZipcodeAction = require('../../src/actions/ZipcodeAction');
 
 
 describe('ZipcodeAction', () => {

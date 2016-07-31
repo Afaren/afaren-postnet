@@ -2,7 +2,7 @@
  * Created by afaren on 7/29/16.
  */
 'use strict';
-const InitAction = require('../../src/shell/actions/InitAction');
+const InitAction = require('../../src/actions/InitAction');
 
 describe('InitAction', () => {
   let initAction;
